@@ -1,2 +1,4 @@
 *.o
 moc_*
+.qmake*
+ytdl_gui.pro.user

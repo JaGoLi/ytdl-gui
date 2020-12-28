@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+#include "maincommand.h"
+#include "downloadstatus.h"
+#include "downloadprogress.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ytdl; }
@@ -12,7 +15,15 @@ class ytdl : public QMainWindow
 {
     Q_OBJECT
 
-    QMessageBox* downloading;
+    //Object pointers
+    downloadStatus* downloading;
+    mainCommand* download_instance;
+    downloadProgress* status;
+
+    //Thread pointers
+    QThread* downloadThread;
+    QThread* progressThread;
+
 
 public:
     ytdl(QWidget *parent = nullptr);
@@ -24,6 +35,7 @@ public:
 
 signals:
     void userAccepted();
+    void closeDownloading();
 
 private:
     Ui::ytdl *ui;
@@ -38,6 +50,7 @@ public slots:
     void downloadAction();
     void printResult(int result_num);
     void messageDownload();
+    void deleteDownloading();
 
 };
 #endif // YTDL_H

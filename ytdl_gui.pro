@@ -10,17 +10,22 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    downloadprogress.cpp \
+    downloadstatus.cpp \
     main.cpp \
     mainactions.cpp \
     maincommand.cpp \
     ytdl.cpp
 
 HEADERS += \
+    downloadprogress.h \
+    downloadstatus.h \
     mainactions.h \
     maincommand.h \
     ytdl.h
 
 FORMS += \
+    downloadstatus.ui \
     ytdl.ui
 
 # Default rules for deployment.

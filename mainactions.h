@@ -5,6 +5,9 @@
 #include <QThread>
 #include "ytdl.h"
 #include "ui_ytdl.h"
+#include "downloadstatus.h"
+#include "ui_downloadstatus.h"
+#include "downloadprogress.h"
 #include "maincommand.h"
 
 

@@ -1,8 +1,10 @@
 #include "mainactions.h"
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QProgressBar>
 #include <cstdlib>
 #include <unistd.h>
 #include <QThread>
@@ -28,8 +30,8 @@ std::string QString_to_str(QString input) {
 //Begin ytdl namespace
 
 void ytdl::run_ytdl(std::string input) {
-    //initialize thread
-    QThread* downloadThread = new QThread;
+    //initialize youtube-dl thread
+    downloadThread = new QThread;
     mainCommand* download_instance = new mainCommand(input);
     download_instance->moveToThread(downloadThread);
 
@@ -43,20 +45,42 @@ void ytdl::run_ytdl(std::string input) {
     connect(this, SIGNAL(userAccepted()), download_instance, SLOT(deleteLater()));
     connect(this, SIGNAL(userAccepted()), downloadThread, SLOT(deleteLater()));
 
+
     //execute
     downloadThread->start();
 
 }
 
 void ytdl::messageDownload() {
-    downloading = new QMessageBox;
-    downloading->setStandardButtons(QMessageBox::NoButton);
-    downloading->setText("Downloading...");
+    downloading = new downloadStatus;
+    Ui::downloadStatus* download_ui = downloading->getUiInstance();
+
+    progressThread = new QThread;
+    downloadProgress* status = new downloadProgress(download_ui);
+    status->moveToThread(progressThread);
+
+    //ProgressThread connections
+    //start
+    connect(progressThread, SIGNAL(started()), status, SLOT(updateStatus()));
+
+    //end
+    connect(status, SIGNAL(finished()), progressThread, SLOT(quit()));
+    connect(progressThread, SIGNAL(finished()), status, SLOT(deleteLater()));
+    connect(progressThread, SIGNAL(finished()), progressThread, SLOT(deleteLater()));
+    connect(this, SIGNAL(closeDownloading()), this, SLOT(deleteDownloading()));
+
+
+    //exec
+    progressThread->start();
     downloading->exec();
 }
 
+void ytdl::deleteDownloading() {
+    downloading->close();
+}
+
 void ytdl::printResult(int result_num) {
-        delete downloading;
+        emit closeDownloading();
 
         if (result_num == 0) {
                 QMessageBox success;
@@ -75,9 +99,10 @@ void ytdl::printResult(int result_num) {
 }
 
 void ytdl::downloadAction() {
-    std::string ytdl_prog = "youtube-dl";
+    std::string ytdl_prog = "youtube-dl 2> /tmp/ytdl_stderr --no-warnings";
     std::string url_str = quote + QString_to_str(ui->lineURL->text()) + quote;
     std::string directory_str = quote + QString_to_str(ui->lineBrowse->text()) + "/%(title)s.%(ext)s" + quote;
+    std::string parse_output = R"(stdbuf -o0 grep -oP '^\[download\].*?\K([0-9]+)' | tee /tmp/ytdl_prg)";
 
     //Music selected
     if (ui->Tabs->currentIndex() == 0) {
@@ -118,7 +143,8 @@ void ytdl::downloadAction() {
         std::string command = ytdl_prog + " -x " + url_str + " -o " + directory_str \
                 + " --audio-format " + audio_format \
                 + " --audio-quality " + audio_quality \
-                + " --ignore-config " + "--no-playlist";
+                + " --ignore-config " + "--no-playlist " + "--newline | " \
+                + parse_output;
 
         this->run_ytdl(command);
     }
@@ -167,7 +193,8 @@ void ytdl::downloadAction() {
 
         std::string command = ytdl_prog + whitespace + url_str + " -o " + directory_str \
                 + " -f " + format_options \
-                + " --ignore-config " + "--no-playlist";
+                + " --ignore-config " + "--no-playlist " + "--newline | " \
+                + parse_output;
 
         this->run_ytdl(command);
     }

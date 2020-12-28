@@ -1,0 +1,40 @@
+# Maintainer: Jason Goulet-Lipman <jason.gouletlipman@gmail.com>
+pkgname=youtubedl-gui
+pkgver=1.0
+pkgrel=1
+arch=('x86_64')
+license=('GPL3')
+pkgdesc="Download Youtube videos to local audio or video files."
+makedepends=("git")
+depends=("youtube-dl"
+	 "qt5-base"
+	 "ffmpeg"
+	 "hicolor-icon-theme"
+	 "gtk-update-icon-cache")
+
+prepare() {
+	git clone https://github.com/JaGoLi/ytdl-gui.git ytdl-git
+	cd ytdl-git
+	mkdir -p ${pkgname}-${pkgver}-${pkgrel}/usr/bin
+	mkdir -p ${pkgname}-${pkgver}-${pkgrel}/usr/share/applications
+	for i in 16 32 64 128 256 512; do
+		mkdir -p ${pkgname}-${pkgver}-${pkgrel}/usr/share/icons/hicolor/${i}x${i}/apps
+	done
+}
+
+build() {
+	cd ytdl-git/src
+	make -j`nproc`
+	cp ytdl_gui ../${pkgname}-${pkgver}-${pkgrel}/usr/bin
+	cd ..
+	cp resources/ytdl-gui.desktop ${pkgname}-${pkgver}-${pkgrel}/usr/share/applications
+	for i in 16 32 64 128 256 512; do
+		cp icons/${i}x${i}.png ${pkgname}-${pkgver}-${pkgrel}/usr/share/icons/hicolor/${i}x${i}/apps/ytdl-gui.png
+	done
+}
+
+package() {
+	cd ytdl-git
+	make INSTALL_ROOT="${pkgname}-${pkgver}-${pkgrel}/" install
+	gtk-update-icon-cache -f
+}

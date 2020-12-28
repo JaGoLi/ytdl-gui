@@ -14,27 +14,25 @@ depends=("youtube-dl"
 
 prepare() {
 	git clone https://github.com/JaGoLi/ytdl-gui.git ytdl-git
-	cd ytdl-git
-	mkdir -p ${pkgname}-${pkgver}-${pkgrel}/usr/bin
-	mkdir -p ${pkgname}-${pkgver}-${pkgrel}/usr/share/applications
-	for i in 16 32 64 128 256 512; do
-		mkdir -p ${pkgname}-${pkgver}-${pkgrel}/usr/share/icons/hicolor/${i}x${i}/apps
-	done
 }
 
 build() {
 	cd ytdl-git/src
 	make -j`nproc`
-	cp ytdl_gui ../${pkgname}-${pkgver}-${pkgrel}/usr/bin
-	cd ..
-	cp resources/ytdl-gui.desktop ${pkgname}-${pkgver}-${pkgrel}/usr/share/applications
-	for i in 16 32 64 128 256 512; do
-		cp icons/${i}x${i}.png ${pkgname}-${pkgver}-${pkgrel}/usr/share/icons/hicolor/${i}x${i}/apps/ytdl-gui.png
-	done
 }
 
 package() {
+	#create directories
+	mkdir -p $pkgdir/usr/bin
+	mkdir -p $pkgdir/usr/share/applications
+	for i in 16 32 64 128 256 512; do
+		mkdir -p $pkgdir/usr/share/icons/hicolor/${i}x${i}/apps
+	done
+
 	cd ytdl-git
-	make INSTALL_ROOT="${pkgname}-${pkgver}-${pkgrel}/" install
-	gtk-update-icon-cache -f
+	cp src/ytdl_gui $pkgdir/usr/bin
+	cp resources/ytdl-gui.desktop $pkgdir/usr/share/applications
+	for i in 16 32 64 128 256 512; do
+		cp icons/${i}x${i}.png $pkgdir/usr/share/icons/hicolor/${i}x${i}/apps/ytdl-gui.png
+	done
 }

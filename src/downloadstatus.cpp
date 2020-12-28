@@ -1,5 +1,6 @@
 #include "downloadstatus.h"
 #include "ui_downloadstatus.h"
+#include <QIcon>
 
 downloadStatus::downloadStatus(QWidget *parent) :
     QDialog(parent),
@@ -7,6 +8,7 @@ downloadStatus::downloadStatus(QWidget *parent) :
 {
     download_ui->setupUi(this);
     this->setWindowTitle("Progress");
+    this->setWindowIcon(QIcon::fromTheme("ytdl-gui"));
 
 }
 

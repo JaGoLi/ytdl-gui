@@ -18,6 +18,7 @@ prepare() {
 
 build() {
 	cd ytdl-git/src
+	qmake
 	make -j`nproc`
 }
 

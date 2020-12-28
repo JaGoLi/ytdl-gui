@@ -6,6 +6,7 @@ downloadStatus::downloadStatus(QWidget *parent) :
     download_ui(new Ui::downloadStatus)
 {
     download_ui->setupUi(this);
+    this->setWindowTitle("Progress");
 
 }
 

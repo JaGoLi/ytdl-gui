@@ -1,3 +1,0 @@
-[submodule "resources/archlinux"]
-	path = resources/archlinux
-	url = git@github.com:JaGoLi/ytdl-gui-aur.git

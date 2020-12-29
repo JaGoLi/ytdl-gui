@@ -5,6 +5,9 @@ pkgrel=1
 arch=('x86_64')
 license=('GPL3')
 pkgdesc="Download Youtube videos to local audio or video files."
+source=("git+https://github.com/JaGoLi/ytdl-gui.git")
+install="youtubedl-gui.install"
+md5sums=('SKIP')
 makedepends=("git")
 depends=("youtube-dl"
 	 "qt5-base"
@@ -12,28 +15,12 @@ depends=("youtube-dl"
 	 "hicolor-icon-theme"
 	 "gtk-update-icon-cache")
 
-prepare() {
-	git clone https://github.com/JaGoLi/ytdl-gui.git ytdl-git
-}
-
 build() {
-	cd ytdl-git/src
-	qmake
-	make -j`nproc`
+	cd ytdl-gui
+	make build
 }
 
 package() {
-	#create directories
-	mkdir -p $pkgdir/usr/bin
-	mkdir -p $pkgdir/usr/share/applications
-	for i in 16 32 64 128 256 512; do
-		mkdir -p $pkgdir/usr/share/icons/hicolor/${i}x${i}/apps
-	done
-
-	cd ytdl-git
-	cp src/ytdl_gui $pkgdir/usr/bin
-	cp resources/ytdl-gui.desktop $pkgdir/usr/share/applications
-	for i in 16 32 64 128 256 512; do
-		cp icons/${i}x${i}.png $pkgdir/usr/share/icons/hicolor/${i}x${i}/apps/ytdl-gui.png
-	done
+	cd ytdl-gui
+	make DESTDIR="$pkgdir/" install
 }

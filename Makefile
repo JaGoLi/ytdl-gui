@@ -10,7 +10,7 @@ clean:
 	make clean; \
 	rm -f ytdl_gui
 
-install: build
+install:
 	#create directories
 	mkdir -p $$DESTDIR/usr/bin
 	mkdir -p $$DESTDIR/usr/share/applications

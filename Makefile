@@ -8,9 +8,9 @@ build:
 clean:
 	cd src; \
 	make clean; \
-	rm ytdl_gui
+	rm -f ytdl_gui
 
-install:
+install: build
 	#create directories
 	mkdir -p $$DESTDIR/usr/bin
 	mkdir -p $$DESTDIR/usr/share/applications
@@ -24,8 +24,8 @@ install:
 	done
 
 uninstall:
-	rm $$DESTDIR/usr/bin/ytdl_gui
-	rm $$DESTDIR/usr/share/applications/ytdl-gui.desktop
+	rm -f $$DESTDIR/usr/bin/ytdl_gui
+	rm -f $$DESTDIR/usr/share/applications/ytdl-gui.desktop
 	for i in 16 32 64 128 256 512; do \
-		rm $$DESTDIR/usr/share/icons/hicolor/$${i}x$${i}/apps/ytdl-gui.png; \
+		rm -f $$DESTDIR/usr/share/icons/hicolor/$${i}x$${i}/apps/ytdl-gui.png; \
 	done

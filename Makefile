@@ -5,6 +5,11 @@ build:
 	qmake; \
 	make -j`nproc`
 
+clean:
+	cd src; \
+	make clean; \
+	rm ytdl_gui
+
 install:
 	#create directories
 	mkdir -p $$DESTDIR/usr/bin
@@ -18,7 +23,9 @@ install:
 		cp icons/$${i}x$${i}.png $$DESTDIR/usr/share/icons/hicolor/$${i}x$${i}/apps/ytdl-gui.png; \
 	done
 
-clean:
-	cd src; \
-	make clean \
-	rm ytdl_gui
+uninstall:
+	rm $$DESTDIR/usr/bin/ytdl_gui
+	rm $$DESTDIR/usr/share/applications/ytdl-gui.desktop
+	for i in 16 32 64 128 256 512; do \
+		rm $$DESTDIR/usr/share/icons/hicolor/$${i}x$${i}/apps/ytdl-gui.png; \
+	done

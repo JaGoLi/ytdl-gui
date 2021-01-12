@@ -18,14 +18,14 @@ install:
 		mkdir -p $$DESTDIR/usr/share/icons/hicolor/$${i}x$${i}/apps; \
 	done
 	cp src/youtubedl-gui $$DESTDIR/usr/bin
-	cp resources/ytdl-gui.desktop $$DESTDIR/usr/share/applications
+	cp resources/youtubedl-gui.desktop $$DESTDIR/usr/share/applications
 	for i in 16 32 64 128 256 512; do \
-		cp icons/$${i}x$${i}.png $$DESTDIR/usr/share/icons/hicolor/$${i}x$${i}/apps/ytdl-gui.png; \
+		cp icons/$${i}x$${i}.png $$DESTDIR/usr/share/icons/hicolor/$${i}x$${i}/apps/youtubedl-gui.png; \
 	done
 
 uninstall:
 	rm -f $$DESTDIR/usr/bin/youtubedl-gui
-	rm -f $$DESTDIR/usr/share/applications/ytdl-gui.desktop
+	rm -f $$DESTDIR/usr/share/applications/youtubedl-gui.desktop
 	for i in 16 32 64 128 256 512; do \
-		rm -f $$DESTDIR/usr/share/icons/hicolor/$${i}x$${i}/apps/ytdl-gui.png; \
+		rm -f $$DESTDIR/usr/share/icons/hicolor/$${i}x$${i}/apps/youtubedl-gui.png; \
 	done

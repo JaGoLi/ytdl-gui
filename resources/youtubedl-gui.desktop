@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Youtube Downloader
 StartupWMCLass=Youtube Downloader
-Exec=/usr/bin/ytdl_gui
-Icon=ytdl-gui
+Exec=/usr/bin/youtubedl-gui
+Icon=youtubedl-gui
 Type=Application
 Categories=AudioVideo;Utility
 Comment=Download Youtube videos to local audio or video files.

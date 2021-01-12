@@ -18,7 +18,7 @@ void downloadProgress::updateStatus() {
     std::string last_line;
     int prog_num = 0;
 
-    while (prog_num != 100) {
+    while (true) {
         std::string file_name = "/tmp/ytdl_prg";
         std::ifstream curr_file;
         curr_file.open(file_name.c_str(), std::fstream::in);
@@ -39,13 +39,22 @@ void downloadProgress::updateStatus() {
             }
             getline(curr_file, last_line);
             if (!last_line.empty()) {
+                int last_val = prog_num;
                 prog_num = std::stoi(last_line);
+
+                //break loop if at end
+                if (prog_num < last_val ||  prog_num == 100) {
+                    download_ui->progressBar->setValue(100);
+                    break;
+                }
+
                 download_ui->progressBar->setValue(prog_num);
             }
 
         }
         sleep(1);
     }
+
     download_ui->progressBar->setFormat("Saving and converting...");
     emit finished();
 }

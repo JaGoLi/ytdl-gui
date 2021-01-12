@@ -18,8 +18,7 @@ void mainCommand::download() {
 
 
     //main command
-    std::system(this->args.c_str());
-    //std::cout << 100 << std::endl;
+    int sys_return = std::system(this->args.c_str());
 
     //check for errors
     int errors = 0;
@@ -33,6 +32,13 @@ void mainCommand::download() {
     if (!err_str.empty()) {
         errors = 1;
     }
+
+    if (sys_return != 0) {
+        errors = 1;
+    }
+
+    //remove progress file
+    remove("/tmp/ytdl_prg");
 
     emit returnFinished(errors);
     emit finished();

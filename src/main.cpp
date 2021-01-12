@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     mainActions q;
     QCoreApplication::setApplicationName(QString("Youtube Downloader"));
     w.setWindowTitle( QCoreApplication::applicationName() );
-    w.setWindowIcon(QIcon::fromTheme("ytdl-gui"));
+    w.setWindowIcon(QIcon::fromTheme("youtubedl-gui"));
     w.show();
     return a.exec();
 }

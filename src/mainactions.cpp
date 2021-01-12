@@ -84,7 +84,7 @@ void ytdl::printResult(int result_num) {
 
         if (result_num == 0) {
                 QMessageBox success;
-                success.setWindowIcon(QIcon::fromTheme("ytdl-gui"));
+                success.setWindowIcon(QIcon::fromTheme("youtubedl-gui"));
                 success.setIcon(QMessageBox::Information);
                 success.setText("Download Succeeded");
                 success.exec();
@@ -92,7 +92,7 @@ void ytdl::printResult(int result_num) {
         }
         else {
                 QMessageBox fail;
-                fail.setWindowIcon(QIcon::fromTheme("ytdl-gui"));
+                fail.setWindowIcon(QIcon::fromTheme("youtubedl-gui"));
                 fail.setIcon(QMessageBox::Critical);
                 fail.setText("Failed! Recheck input for errors.");
                 fail.exec();

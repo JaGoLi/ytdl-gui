@@ -8,7 +8,7 @@ downloadStatus::downloadStatus(QWidget *parent) :
 {
     download_ui->setupUi(this);
     this->setWindowTitle("Progress");
-    this->setWindowIcon(QIcon::fromTheme("ytdl-gui"));
+    this->setWindowIcon(QIcon::fromTheme("youtubedl-gui"));
 
 }
 

@@ -246,7 +246,7 @@
         <x>140</x>
         <y>50</y>
         <width>451</width>
-        <height>21</height>
+        <height>23</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="radiosVFormat">
@@ -387,6 +387,12 @@
     <property name="text">
      <string>Download</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QLineEdit" name="lineBrowse">
     <property name="geometry">
@@ -427,8 +433,8 @@
  <connections/>
  <buttongroups>
   <buttongroup name="VFormatGroup"/>
-  <buttongroup name="MQualityGroup"/>
   <buttongroup name="MFormatGroup"/>
+  <buttongroup name="MQualityGroup"/>
   <buttongroup name="VResGroup"/>
  </buttongroups>
 </ui>

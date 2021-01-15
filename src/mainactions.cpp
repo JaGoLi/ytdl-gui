@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include <QProgressBar>
+#include <QShortcut>
 #include <cstdlib>
 #include <unistd.h>
 #include <QThread>
@@ -19,6 +20,9 @@ mainActions::mainActions(QObject *parent) : QObject(parent)
 
         connect(ui->buttonDownload, SIGNAL(released()), window, SLOT(downloadAction()));
 
+        //connect enter to downloadAction
+        QShortcut* returnAction = new QShortcut(QKeySequence("Return"), window);
+        connect(returnAction, SIGNAL(activated()), ui->buttonDownload, SLOT(click()));
 }
 
 std::string QString_to_str(QString input) {

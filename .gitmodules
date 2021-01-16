@@ -1,3 +1,6 @@
 [submodule "resources/archlinux"]
 	path = resources/archlinux
 	url = https://github.com/JaGoLi/ytdl-gui-aur.git
+[submodule "resources/ubuntu"]
+	path = resources/ubuntu
+	url = https://github.com/JaGoLi/ytdl-gui-ppa.git

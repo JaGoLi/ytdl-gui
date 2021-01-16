@@ -16,9 +16,14 @@ public:
     Ui::downloadStatus* getUiInstance();
     ~downloadStatus();
 
+    bool download_lock = false;
+
 private:
     Ui::downloadStatus *download_ui;
     static Ui::downloadStatus* curr_ui;
+
+    //close button override
+    void closeEvent(QCloseEvent *event) override;
 };
 
 #endif // DOWNLOADSTATUS_H

@@ -1,6 +1,7 @@
 #include "downloadstatus.h"
 #include "ui_downloadstatus.h"
 #include <QIcon>
+#include <QCloseEvent>
 
 downloadStatus::downloadStatus(QWidget *parent) :
     QDialog(parent),
@@ -9,7 +10,6 @@ downloadStatus::downloadStatus(QWidget *parent) :
     download_ui->setupUi(this);
     this->setWindowTitle("Progress");
     this->setWindowIcon(QIcon::fromTheme("youtubedl-gui"));
-
 }
 
 downloadStatus::~downloadStatus()
@@ -19,4 +19,14 @@ downloadStatus::~downloadStatus()
 
 Ui::downloadStatus* downloadStatus::getUiInstance() {
     return this->download_ui;
+}
+
+void downloadStatus::closeEvent(QCloseEvent* event) {
+    if (download_lock) {
+        event->ignore();
+    }
+
+    else {
+        event->accept();
+    }
 }

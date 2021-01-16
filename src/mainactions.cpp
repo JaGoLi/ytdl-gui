@@ -41,7 +41,9 @@ void ytdl::run_ytdl(std::string input) {
 
     //start thread
     connect(downloadThread, SIGNAL(started()), this, SLOT(messageDownload()));
+    connect(downloadThread, SIGNAL(started()), this, SLOT(setStatusClose()));
     connect(downloadThread, SIGNAL(started()), download_instance, SLOT(download()));
+    connect(download_instance, SIGNAL(returnFinished(int)), this, SLOT(setStatusClose()));
     connect(download_instance, SIGNAL(returnFinished(int)), this, SLOT(printResult(int)));
 
     //delete thread
@@ -77,6 +79,15 @@ void ytdl::messageDownload() {
     //exec
     progressThread->start();
     downloading->exec();
+}
+
+void ytdl::setStatusClose() {
+    if (downloading->download_lock == false) {
+        downloading->download_lock = true;
+    }
+    else {
+        downloading->download_lock = false;
+    }
 }
 
 void ytdl::deleteDownloading() {

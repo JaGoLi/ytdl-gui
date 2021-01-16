@@ -51,6 +51,7 @@ public slots:
     void printResult(int result_num);
     void messageDownload();
     void deleteDownloading();
+    void setStatusClose();
 
 };
 #endif // YTDL_H

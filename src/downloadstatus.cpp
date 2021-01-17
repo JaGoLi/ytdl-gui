@@ -13,7 +13,6 @@ downloadStatus::downloadStatus(QWidget *parent) :
 
     //add minimize button
     this->setWindowFlags(windowFlags() | Qt::WindowMinimizeButtonHint);
-    this->setWindowFlags(windowFlags() &(~Qt::WindowMaximizeButtonHint));
 }
 
 downloadStatus::~downloadStatus()

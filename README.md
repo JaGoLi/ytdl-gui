@@ -16,7 +16,7 @@ For a system based on Ubuntu 20.04 Focal Fossa or 20.10 Groovy Gorilla, simply a
 
 ## Build From Source
 ### Dependencies
-To build this application from source, you need the basic development tools for the Qt5 framework, and a recent version the ```youtube-dl``` binary for the application to compile and run on your system. <br/><br/>
+To build this application from source, you need the basic development tools for the Qt5 framework, and a recent version the ```youtube-dl``` binary for the application to compile and run on your system. <br/>
 Here is a list of build dependencies for arch linux:<br/>
 ```base-devel qt5-base ffmpeg youtubedl```<br/>
 

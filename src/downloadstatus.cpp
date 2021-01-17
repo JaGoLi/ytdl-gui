@@ -13,6 +13,9 @@ downloadStatus::downloadStatus(QWidget *parent) :
 
     //add minimize button
     this->setWindowFlags(windowFlags() | Qt::WindowMinimizeButtonHint);
+
+    //remove help button
+    this->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 }
 
 downloadStatus::~downloadStatus()

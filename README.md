@@ -1,5 +1,5 @@
 # youtubedl-gui
-A simple-to-use, corss-platform graphical interface for youtube-dl.<br/><br/>
+A simple-to-use, cross-platform graphical interface for youtube-dl.<br/><br/>
 ![youtubedl-gui-screenshot.png](https://raw.githubusercontent.com/JaGoLi/ytdl-gui/main/resources/youtubedl-gui-screenshot.png)<br/>
 
 

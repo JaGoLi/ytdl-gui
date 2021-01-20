@@ -11,6 +11,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(Qt5 COMPONENTS Core Widgets  REQUIRED)
 
+INCLUDE(GNUInstallDirs)
+
 add_definitions(${Qt5Widgets_DEFINITIONS})
 add_definitions(${Qt5Core_DEFINITIONS})
 include_directories(${PROJECT_BINARY_DIR})

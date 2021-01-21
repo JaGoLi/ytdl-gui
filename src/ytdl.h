@@ -6,6 +6,7 @@
 #include "maincommand.h"
 #include "downloadstatus.h"
 #include "downloadprogress.h"
+#include "canceldownload.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ytdl; }
@@ -23,6 +24,7 @@ class ytdl : public QMainWindow
     //Thread pointers
     QThread* downloadThread;
     QThread* progressThread;
+    cancelDownload* cancel;
 
 
 public:

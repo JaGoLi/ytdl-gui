@@ -75,11 +75,22 @@ void ytdl::messageDownload() {
     connect(progressThread, SIGNAL(finished()), progressThread, SLOT(deleteLater()));
     connect(this, SIGNAL(closeDownloading()), this, SLOT(deleteDownloading()));
 
+    //confirmation close window
+    cancel = new cancelDownload;
+    QThread* cancelThread = new QThread;
+
+    connect(downloading, SIGNAL(openCancelWindow()), cancelThread, SLOT(start()));
+    connect(cancelThread, SIGNAL(started()), cancel, SLOT(execCancelWindow()));
+    connect(this, SIGNAL(closeDownloading()), cancelThread, SLOT(quit()));
+    connect(cancelThread, SIGNAL(finished()), cancel, SLOT(deleteLater()));
+    connect(cancelThread, SIGNAL(finished()), cancelThread, SLOT(deleteLater()));
+
 
     //exec
     progressThread->start();
     downloading->exec();
 }
+
 
 void ytdl::setStatusClose() {
     if (downloading->download_lock == false) {

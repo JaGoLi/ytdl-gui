@@ -6,6 +6,7 @@
 #include "maincommand.h"
 #include "downloadstatus.h"
 #include "downloadprogress.h"
+#include "canceldownload.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ytdl; }
@@ -19,10 +20,12 @@ class ytdl : public QMainWindow
     downloadStatus* downloading;
     mainCommand* download_instance;
     downloadProgress* status;
+    cancelDownload* cancel;
 
     //Thread pointers
     QThread* downloadThread;
     QThread* progressThread;
+    QThread* cancelThread;
 
 
 public:
@@ -41,6 +44,7 @@ private:
     Ui::ytdl *ui;
     static ytdl* curr_window;
     static Ui::ytdl* curr_ui;
+    bool no_feedback = false;
 
 public slots:
     //internal
@@ -52,6 +56,7 @@ public slots:
     void messageDownload();
     void deleteDownloading();
     void setStatusClose();
+    void killDownloadProcess();
 
 };
 #endif // YTDL_H

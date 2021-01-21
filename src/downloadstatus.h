@@ -18,6 +18,12 @@ public:
 
     bool download_lock = false;
 
+signals:
+    void openCancelWindow();
+
+public slots:
+    void closeDownloadWindow();
+
 private:
     Ui::downloadStatus *download_ui;
     static Ui::downloadStatus* curr_ui;

@@ -31,6 +31,7 @@ set(UI_FILES
     src/ytdl.ui)
 
 set(MOC_FILES
+    src/canceldownload.h
     src/downloadprogress.h
     src/downloadstatus.h
     src/mainactions.h
@@ -38,6 +39,7 @@ set(MOC_FILES
     src/ytdl.h)
 
 set(SRC
+    src/canceldownload.cpp
     src/downloadprogress.cpp
     src/downloadstatus.cpp
     src/main.cpp

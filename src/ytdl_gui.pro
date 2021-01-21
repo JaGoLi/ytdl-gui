@@ -12,6 +12,7 @@ TARGET = youtubedl-gui
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    canceldownload.cpp \
     downloadprogress.cpp \
     downloadstatus.cpp \
     main.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
     ytdl.cpp
 
 HEADERS += \
+    canceldownload.h \
     downloadprogress.h \
     downloadstatus.h \
     mainactions.h \

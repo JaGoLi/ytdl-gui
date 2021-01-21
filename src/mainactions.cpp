@@ -75,11 +75,33 @@ void ytdl::messageDownload() {
     connect(progressThread, SIGNAL(finished()), progressThread, SLOT(deleteLater()));
     connect(this, SIGNAL(closeDownloading()), this, SLOT(deleteDownloading()));
 
+    //confirmation close window
+    cancel = new cancelDownload;
+    QThread* cancelThread = new QThread;
+
+    //start
+    connect(downloading, SIGNAL(openCancelWindow()), cancelThread, SLOT(start()));
+    connect(downloading, SIGNAL(openCancelWindow()), cancel, SLOT(show()));
+    connect(cancel, SIGNAL(accepted()), this, SLOT(killDownloadProcess()));
+
+    //end
+    connect(this, SIGNAL(closeDownloading()), cancelThread, SLOT(quit()));
+    connect(cancelThread, SIGNAL(finished()), cancel, SLOT(deleteLater()));
+    connect(cancelThread, SIGNAL(finished()), cancelThread, SLOT(deleteLater()));
 
     //exec
     progressThread->start();
     downloading->exec();
 }
+
+void ytdl::killDownloadProcess() {
+    no_feedback = true;
+    downloading->download_lock = false;
+    downloading->close();
+
+    std::system("killall youtube-dl");
+}
+
 
 void ytdl::setStatusClose() {
     if (downloading->download_lock == false) {
@@ -102,16 +124,26 @@ void ytdl::printResult(int result_num) {
                 success.setWindowIcon(QIcon::fromTheme("youtubedl-gui"));
                 success.setIcon(QMessageBox::Information);
                 success.setText("Download Succeeded");
-                success.exec();
+
+                if (no_feedback == false) {
+                    success.exec();
+                }
+
                 emit userAccepted();
+                no_feedback = false;
         }
         else {
                 QMessageBox fail;
                 fail.setWindowIcon(QIcon::fromTheme("youtubedl-gui"));
                 fail.setIcon(QMessageBox::Critical);
                 fail.setText("Failed! Recheck input for errors.");
-                fail.exec();
+
+                if (no_feedback == false) {
+                    fail.exec();
+                }
+
                 emit userAccepted();
+                no_feedback = false;
         }
 }
 

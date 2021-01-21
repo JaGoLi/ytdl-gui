@@ -27,8 +27,14 @@ Ui::downloadStatus* downloadStatus::getUiInstance() {
     return this->download_ui;
 }
 
+void downloadStatus::closeDownloadWindow() {
+    download_lock = false;
+    this->close();
+}
+
 void downloadStatus::closeEvent(QCloseEvent* event) {
     if (download_lock) {
+        emit openCancelWindow();
         event->ignore();
     }
 

@@ -55,7 +55,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Music&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <attribute name="title">
-      <string>Music</string>
+      <string>Audio</string>
      </attribute>
      <widget class="QLabel" name="labelQuality">
       <property name="geometry">
@@ -432,8 +432,8 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="VFormatGroup"/>
   <buttongroup name="MFormatGroup"/>
+  <buttongroup name="VFormatGroup"/>
   <buttongroup name="MQualityGroup"/>
   <buttongroup name="VResGroup"/>
  </buttongroups>

@@ -96,8 +96,7 @@ void ytdl::messageDownload() {
 
 void ytdl::killDownloadProcess() {
     no_feedback = true;
-    downloading->download_lock = false;
-    downloading->close();
+    downloading->closeDownloadWindow();
 
     std::system("killall youtube-dl");
 }

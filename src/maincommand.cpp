@@ -16,7 +16,6 @@ void mainCommand::download() {
     remove("/tmp/ytdl_prg");
     remove("/tmp/ytdl_stderr");
 
-
     //main command
     int sys_return = std::system(this->args.c_str());
 

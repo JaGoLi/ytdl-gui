@@ -1,4 +1,5 @@
 #include "canceldownload.h"
+#include <QIcon>
 
 cancelDownload::cancelDownload(QWidget *parent) : QMessageBox(parent)
 {
@@ -6,12 +7,5 @@ cancelDownload::cancelDownload(QWidget *parent) : QMessageBox(parent)
     this->setDefaultButton(QMessageBox::No);
     this->setText("Cancel download in progress?");
     this->setIcon(QMessageBox::Question);
-}
-
-void cancelDownload::execCancelWindow() {
-    int result = this->exec();
-
-    if (result == QMessageBox::Yes) {
-        emit killDownloadProcess();
-    }
+    this->setWindowIcon(QIcon::fromTheme("youtubedl-gui"));
 }

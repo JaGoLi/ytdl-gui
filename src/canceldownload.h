@@ -12,10 +12,8 @@ public:
 
 
 public slots:
-    void execCancelWindow();
 
 signals:
-    void killDownloadProcess();
 
 };
 

@@ -20,11 +20,12 @@ class ytdl : public QMainWindow
     downloadStatus* downloading;
     mainCommand* download_instance;
     downloadProgress* status;
+    cancelDownload* cancel;
 
     //Thread pointers
     QThread* downloadThread;
     QThread* progressThread;
-    cancelDownload* cancel;
+    QThread* cancelThread;
 
 
 public:
@@ -43,6 +44,7 @@ private:
     Ui::ytdl *ui;
     static ytdl* curr_window;
     static Ui::ytdl* curr_ui;
+    bool no_feedback = false;
 
 public slots:
     //internal
@@ -54,6 +56,7 @@ public slots:
     void messageDownload();
     void deleteDownloading();
     void setStatusClose();
+    void killDownloadProcess();
 
 };
 #endif // YTDL_H

@@ -404,37 +404,46 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="labelURL">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>81</width>
-      <height>21</height>
+      <width>571</width>
+      <height>25</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Enter URL:</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineURL">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>10</y>
-      <width>501</width>
-      <height>23</height>
-     </rect>
-    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="labelURL">
+       <property name="text">
+        <string>Enter URL:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="lineURL"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="QCheckBox" name="playlistCheck">
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string>Playlist</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="MFormatGroup"/>
   <buttongroup name="VFormatGroup"/>
-  <buttongroup name="MQualityGroup"/>
   <buttongroup name="VResGroup"/>
+  <buttongroup name="MQualityGroup"/>
+  <buttongroup name="MFormatGroup"/>
  </buttongroups>
 </ui>

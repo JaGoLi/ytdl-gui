@@ -13,8 +13,7 @@
 std::string whitespace = " ";
 std::string quote = "'";
 
-mainActions::mainActions(QObject *parent) : QObject(parent)
-{
+mainActions::mainActions(QObject *parent) : QObject(parent)	{
         ytdl* window = ytdl::getWinInstance();
         Ui::ytdl* ui = ytdl::getUiInstance();
 
@@ -152,6 +151,15 @@ void ytdl::downloadAction() {
     std::string directory_str = quote + QString_to_str(ui->lineBrowse->text()) + "/%(title)s.%(ext)s" + quote;
     std::string parse_output = R"(stdbuf -o0 grep -oP '^\[download\].*?\K([0-9]+)' | tee /tmp/ytdl_prg)";
 
+    //Youtube playlist support
+    std::string playlist;
+    if (ui->playlistCheck->isChecked()) {
+        playlist = "";
+    }
+    else {
+        playlist = "--no-playlist ";
+    }
+
     //Music selected
     if (ui->Tabs->currentIndex() == 0) {
         std::string audio_format;
@@ -188,10 +196,11 @@ void ytdl::downloadAction() {
                         audio_quality = "8";
         }
 
+
         std::string command = ytdl_prog + " -x " + url_str + " -o " + directory_str \
                 + " --audio-format " + audio_format \
                 + " --audio-quality " + audio_quality \
-                + " --ignore-config " + "--no-playlist " + "--newline | " \
+                + " --ignore-config " + playlist + "--newline | " \
                 + parse_output;
 
         this->run_ytdl(command);
@@ -241,7 +250,7 @@ void ytdl::downloadAction() {
 
         std::string command = ytdl_prog + whitespace + url_str + " -o " + directory_str \
                 + " -f " + format_options \
-                + " --ignore-config " + "--no-playlist " + "--newline | " \
+                + " --ignore-config " + playlist + "--newline | " \
                 + parse_output;
 
         this->run_ytdl(command);

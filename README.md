@@ -1,6 +1,6 @@
 # youtubedl-gui
 A simple-to-use, cross-platform graphical interface for youtube-dl.<br/><br/>
-![youtubedl-gui-screenshot.png](https://raw.githubusercontent.com/JaGoLi/ytdl-gui/main/resources/youtubedl-gui-screenshot.png)<br/>
+![youtubedl-gui-screenshot.png](https://github.com/JaGoLi/ytdl-gui/raw/main/resources/youtubedl-gui-screenshot.png)<br/>
 
 
 ## Installation Instructions

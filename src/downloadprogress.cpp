@@ -6,12 +6,17 @@
 #include <unistd.h>
 
 #include "downloadprogress.h"
+#include "ui_ytdl.h"
+#include "ytdl.h"
 
 downloadProgress::downloadProgress(Ui::downloadStatus* input) {
     this->download_ui = input;
 }
 
 void downloadProgress::updateStatus() {
+    //get mainwindow pointer
+    Ui::ytdl* main_ui = ytdl::getUiInstance();
+
     download_ui->progressBar->setValue(0);
 
     //read file
@@ -42,10 +47,12 @@ void downloadProgress::updateStatus() {
                 int last_val = prog_num;
                 prog_num = std::stoi(last_line);
 
-                //break loop if at end
-                if (prog_num < last_val ||  prog_num == 100) {
-                    download_ui->progressBar->setValue(100);
-                    break;
+                //break loop if not in playlist
+                if (!main_ui->playlistCheck->isChecked()) {
+                    if (prog_num < last_val ||  prog_num == 100) {
+                        download_ui->progressBar->setValue(100);
+                        break;
+                    }
                 }
 
                 download_ui->progressBar->setValue(prog_num);

@@ -118,7 +118,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <ellipse
-       style="fill:#ff0000;fill-rule:evenodd;stroke-width:0.308519"
+       style="fill:#D60000;fill-rule:evenodd;stroke-width:0.308519"
        id="path22"
        cx="240.35616"
        cy="246.74463"
@@ -144,7 +144,7 @@
        inkscape:transform-center-y="8.5180559e-06" />
     <path
        id="rect32"
-       style="fill:#0000ff;stroke-width:0.999999;filter:url(#filter1673)"
+       style="fill:#FF8F33;stroke-width:0.999999;filter:url(#filter1673)"
        d="M 1156.0234,84.484375 V 876.54492 H 934.26953 l 202.79887,315.28128 202.7988,315.2812 202.7969,-315.2812 202.7988,-315.28128 H 1523.709 V 84.484375 Z"
        transform="matrix(0.26254276,0,0,0.27263752,5.0915719,22.337547)" />
   </g>

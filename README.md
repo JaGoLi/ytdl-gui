@@ -10,7 +10,7 @@ On any arch system with an aur helper such as ```yay```:<br/>
 ```yay -S youtubedl-gui```<br/>
 Everything required to compile and install the application from source should be done automatically.
 ### Ubuntu
-For a system based on Ubuntu 20.04 Focal Fossa or 20.10 Groovy Gorilla, simply add my ppa and install the application:<br/>
+For a system based on Ubuntu 18.04 Bionic Beaver, 20.04 Focal Fossa or 20.10 Groovy Gorilla, simply add my ppa and install the application:<br/>
 ```sudo add-apt-repository ppa:mordec13/youtubedl-gui```<br/>
 ```sudo apt update && sudo apt install youtubedl-gui```<br/>
 

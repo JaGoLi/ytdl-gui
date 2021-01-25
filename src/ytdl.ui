@@ -48,6 +48,9 @@
      <number>0</number>
     </property>
     <widget class="QWidget" name="Music">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="toolTip">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Music&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
@@ -362,49 +365,7 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QPushButton" name="buttonBrowse">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>170</y>
-      <width>80</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Browse...</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="buttonDownload">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>170</y>
-      <width>161</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Download</string>
-    </property>
-    <property name="autoDefault">
-     <bool>false</bool>
-    </property>
-    <property name="default">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineBrowse">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>170</y>
-      <width>301</width>
-      <height>23</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -413,7 +374,7 @@
       <height>25</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout">
+    <layout class="QGridLayout" name="urlLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="labelURL">
        <property name="text">
@@ -436,14 +397,84 @@
      </item>
     </layout>
    </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>170</y>
+      <width>581</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="downloadLayout">
+     <property name="spacing">
+      <number>10</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="buttonBrowse">
+       <property name="text">
+        <string>Browse...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineBrowse">
+       <property name="maximumSize">
+        <size>
+         <width>240</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="defaultsCheck">
+       <property name="minimumSize">
+        <size>
+         <width>77</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string>Defaults</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonDownload">
+       <property name="minimumSize">
+        <size>
+         <width>160</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Download</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <resources/>
  <connections/>
  <buttongroups>
+  <buttongroup name="MFormatGroup"/>
   <buttongroup name="VFormatGroup"/>
   <buttongroup name="VResGroup"/>
   <buttongroup name="MQualityGroup"/>
-  <buttongroup name="MFormatGroup"/>
  </buttongroups>
 </ui>

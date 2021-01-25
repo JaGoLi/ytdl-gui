@@ -47,8 +47,8 @@ void downloadProgress::updateStatus() {
                 int last_val = prog_num;
                 prog_num = std::stoi(last_line);
 
-                //break loop if not in playlist
-                if (!main_ui->playlistCheck->isChecked()) {
+                //break loop if not in playlist and video
+                if (!main_ui->playlistCheck->isChecked() && !main_ui->Tabs->currentIndex()) {
                     if (prog_num < last_val ||  prog_num == 100) {
                         download_ui->progressBar->setValue(100);
                         break;

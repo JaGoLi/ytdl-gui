@@ -57,6 +57,7 @@ public slots:
     void deleteDownloading();
     void setStatusClose();
     void killDownloadProcess();
+    void changeVisibility(int state);
 
 };
 #endif // YTDL_H

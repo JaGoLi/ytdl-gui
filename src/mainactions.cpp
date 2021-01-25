@@ -22,6 +22,9 @@ mainActions::mainActions(QObject *parent) : QObject(parent)	{
         //connect enter to downloadAction
         QShortcut* returnAction = new QShortcut(QKeySequence("Return"), window);
         connect(returnAction, SIGNAL(activated()), ui->buttonDownload, SLOT(click()));
+
+        //connect defaults checkbox to blurring out of options
+        connect(ui->defaultsCheck, SIGNAL(stateChanged(int)), window, SLOT(changeVisibility(int)));
 }
 
 std::string QString_to_str(QString input) {
@@ -97,7 +100,11 @@ void ytdl::killDownloadProcess() {
     no_feedback = true;
     downloading->closeDownloadWindow();
 
-    std::system("killall youtube-dl");
+    int kill_status = std::system("killall youtube-dl");
+
+    if (kill_status != 0) {
+        std::cout << "couldn't kill process" << std::endl;
+    }
 }
 
 
@@ -112,6 +119,17 @@ void ytdl::setStatusClose() {
 
 void ytdl::deleteDownloading() {
     downloading->close();
+}
+
+void ytdl::changeVisibility(int state) {
+    if (state == 2) {
+        ui->Music->setEnabled(false);
+        ui->Video->setEnabled(false);
+    }
+    else {
+        ui->Music->setEnabled(true);
+        ui->Video->setEnabled(true);
+    }
 }
 
 void ytdl::printResult(int result_num) {
@@ -160,100 +178,126 @@ void ytdl::downloadAction() {
         playlist = "--no-playlist ";
     }
 
-    //Music selected
-    if (ui->Tabs->currentIndex() == 0) {
-        std::string audio_format;
-        switch(ui->MFormatGroup->checkedId()) {
-                case 0:
-                        audio_format = "aac";
-                        break;
-                case 1:
-                        audio_format = "flac";
-                        break;
-                case 2:
-                        audio_format = "mp3";
-                        break;
-                case 3:
-                        audio_format = "opus";
-                        break;
-                case 4:
-                        audio_format = "wav";
-                        break;
+    //Defaults override
+    if (ui->defaultsCheck->isChecked()) {
+
+        //Audio selected
+        if (ui->Tabs->currentIndex() == 0) {
+            std::string command = ytdl_prog + " -x " + url_str + " -o " + directory_str \
+                    + " --ignore-config " + playlist + "--newline | " \
+                    + parse_output;
+
+            this->run_ytdl(command);
         }
 
-        std::string audio_quality;
-        switch(ui->MQualityGroup->checkedId()) {
-                case 0:
-                        audio_quality = "0";
-                        break;
-                case 1:
-                        audio_quality = "2";
-                        break;
-                case 2:
-                        audio_quality = "5";
-                        break;
-                case 3:
-                        audio_quality = "8";
+        //Video selected
+        else {
+            std::string command = ytdl_prog + whitespace + url_str + " -o " + directory_str \
+                    + " --ignore-config " + playlist + "--newline | " \
+                    + parse_output;
+
+            this->run_ytdl(command);
         }
 
-
-        std::string command = ytdl_prog + " -x " + url_str + " -o " + directory_str \
-                + " --audio-format " + audio_format \
-                + " --audio-quality " + audio_quality \
-                + " --ignore-config " + playlist + "--newline | " \
-                + parse_output;
-
-        this->run_ytdl(command);
     }
 
-    //Video selected
+    //Standard options
     else {
-        std::string audio_format = "bestaudio";
-        std::string video_format;
-        switch(ui->VFormatGroup->checkedId()) {
-                case 0:
-                        video_format = "3gp";
-                        break;
-                case 1:
-                        video_format = "flv";
-                        break;
-                case 2:
-                        video_format = "mp4";
-                        audio_format = "m4a";
-                        break;
-                case 3:
-                        video_format = "webm";
-                        break;
+        //Audio selected
+        if (ui->Tabs->currentIndex() == 0) {
+            std::string audio_format;
+            switch(ui->MFormatGroup->checkedId()) {
+                    case 0:
+                            audio_format = "aac";
+                            break;
+                    case 1:
+                            audio_format = "flac";
+                            break;
+                    case 2:
+                            audio_format = "mp3";
+                            break;
+                    case 3:
+                            audio_format = "opus";
+                            break;
+                    case 4:
+                            audio_format = "wav";
+                            break;
+            }
+
+            std::string audio_quality;
+            switch(ui->MQualityGroup->checkedId()) {
+                    case 0:
+                            audio_quality = "0";
+                            break;
+                    case 1:
+                            audio_quality = "2";
+                            break;
+                    case 2:
+                            audio_quality = "5";
+                            break;
+                    case 3:
+                            audio_quality = "8";
+            }
+
+
+            std::string command = ytdl_prog + " -x " + url_str + " -o " + directory_str \
+                    + " --audio-format " + audio_format \
+                    + " --audio-quality " + audio_quality \
+                    + " --ignore-config " + playlist + "--newline | " \
+                    + parse_output;
+
+            this->run_ytdl(command);
         }
 
-        std::string video_res;
-        switch(ui->VResGroup->checkedId()) {
-                case 0:
-                        video_res = "2160";
-                        break;
-                case 1:
-                        video_res = "1440";
-                        break;
-                case 2:
-                        video_res = "1080";
-                        break;
-                case 3:
-                        video_res = "720";
-                        break;
-                case 4:
-                        video_res = "480";
-                        break;
+        //Video selected
+        else {
+            std::string audio_format = "bestaudio";
+            std::string video_format;
+            switch(ui->VFormatGroup->checkedId()) {
+                    case 0:
+                            video_format = "3gp";
+                            break;
+                    case 1:
+                            video_format = "flv";
+                            break;
+                    case 2:
+                            video_format = "mp4";
+                            audio_format = "m4a";
+                            break;
+                    case 3:
+                            video_format = "webm";
+                            break;
+            }
+
+            std::string video_res;
+            switch(ui->VResGroup->checkedId()) {
+                    case 0:
+                            video_res = "2160";
+                            break;
+                    case 1:
+                            video_res = "1440";
+                            break;
+                    case 2:
+                            video_res = "1080";
+                            break;
+                    case 3:
+                            video_res = "720";
+                            break;
+                    case 4:
+                            video_res = "480";
+                            break;
+            }
+
+            std::string format_options = quote + video_format + "[height=" + video_res \
+                    + "]+" + audio_format + "/bestvideo[height<=" + video_res + "]+bestaudio" + quote;
+
+            std::string command = ytdl_prog + whitespace + url_str + " -o " + directory_str \
+                    + " -f " + format_options \
+                    + " --ignore-config " + playlist + "--newline | " \
+                    + parse_output;
+
+            this->run_ytdl(command);
         }
-
-        std::string format_options = quote + video_format + "[height=" + video_res \
-                + "]+" + audio_format + "/bestvideo[height<=" + video_res + "]+bestaudio" + quote;
-
-        std::string command = ytdl_prog + whitespace + url_str + " -o " + directory_str \
-                + " -f " + format_options \
-                + " --ignore-config " + playlist + "--newline | " \
-                + parse_output;
-
-        this->run_ytdl(command);
     }
 
 }

@@ -13,7 +13,7 @@ Everything required to compile and install the application from source should be
 To try out the beta branch of this project, you can download the package ```youtubedl-gui-beta``` as such<br/>
 ```yay -S youtubedl-gui-beta```
 ### Ubuntu
-For a system based on Ubuntu 20.04 Focal Fossa or 20.10 Groovy Gorilla, simply add my ppa and install the application:<br/>
+For a system based on Ubuntu 18.04 Bionic Beaver, 20.04 Focal Fossa or 20.10 Groovy Gorilla, simply add my ppa and install the application:<br/>
 ```sudo add-apt-repository ppa:mordec13/youtubedl-gui```<br/>
 ```sudo apt update && sudo apt install youtubedl-gui```<br/>
 

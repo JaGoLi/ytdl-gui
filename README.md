@@ -5,11 +5,11 @@ A simple-to-use, cross-platform graphical interface for youtube-dl.
 I maintain packages for Arch and Arch-based distros (via the AUR) and for Ubuntu and Ubuntu-based distros (using a PPA).
 ### Arch Linux
 On any Arch or Arch-based system with an AUR helper such as `yay` or `paru`, get the [`youtubedl-gui`](https://aur.archlinux.org/packages/youtubedl-gui) package as such:  
-```# yay -S youtubedl-gui```  
+```yay -S youtubedl-gui```  
 Everything required to compile and install the application from source should be done automatically.
 
 To try out the beta branch of this project, you can get the [`youtubedl-gui-beta`](https://aur.archlinux.org/packages/youtubedl-gui-beta/) package instead as such:  
-```# yay -S youtubedl-gui-beta```
+```yay -S youtubedl-gui-beta```
 ### Ubuntu
 For a system based on Ubuntu 18.04, 20.04, or 20.10, add my PPA and install the application:  
 ```sudo add-apt-repository ppa:mordec13/youtubedl-gui```  

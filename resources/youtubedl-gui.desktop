@@ -1,9 +1,9 @@
 [Desktop Entry]
-Name=Youtube Downloader
-StartupWMCLass=Youtube Downloader
+Name=YouTube Downloader
+StartupWMCLass=YouTube Downloader
 Exec=/usr/bin/youtubedl-gui
 Icon=youtubedl-gui
 Type=Application
 Categories=AudioVideo;Utility
-Comment=Download Youtube videos to local audio or video files.
+Comment=Graphical interface for youtube-dl
 Keywords=Youtube;Download

@@ -1,9 +1,0 @@
-/home/jason/ytdl-gui/build/CMakeFiles/install/strip.dir
-/home/jason/ytdl-gui/build/CMakeFiles/install/local.dir
-/home/jason/ytdl-gui/build/CMakeFiles/install.dir
-/home/jason/ytdl-gui/build/CMakeFiles/list_install_components.dir
-/home/jason/ytdl-gui/build/CMakeFiles/rebuild_cache.dir
-/home/jason/ytdl-gui/build/CMakeFiles/edit_cache.dir
-/home/jason/ytdl-gui/build/CMakeFiles/youtubedl-gui.dir
-/home/jason/ytdl-gui/build/CMakeFiles/uninstall.dir
-/home/jason/ytdl-gui/build/CMakeFiles/youtubedl-gui_autogen.dir

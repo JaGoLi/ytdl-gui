@@ -1,14 +1,14 @@
-if(NOT EXISTS "@CMAKE_BINARY_DIR@/install_manifest.txt")
-  message(FATAL_ERROR "Cannot find install manifest: @CMAKE_BINARY_DIR@/install_manifest.txt")
+if(NOT EXISTS "/home/jason/ytdl-gui/build/install_manifest.txt")
+  message(FATAL_ERROR "Cannot find install manifest: /home/jason/ytdl-gui/build/install_manifest.txt")
 endif()
 
-file(READ "@CMAKE_BINARY_DIR@/install_manifest.txt" files)
+file(READ "/home/jason/ytdl-gui/build/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 foreach(file ${files})
   message(STATUS "Uninstalling $ENV{DESTDIR}${file}")
   if(IS_SYMLINK "$ENV{DESTDIR}${file}" OR EXISTS "$ENV{DESTDIR}${file}")
     exec_program(
-      "@CMAKE_COMMAND@" ARGS "-E remove \"$ENV{DESTDIR}${file}\""
+      "/usr/bin/cmake" ARGS "-E remove \"$ENV{DESTDIR}${file}\""
       OUTPUT_VARIABLE rm_out
       RETURN_VALUE rm_retval
       )

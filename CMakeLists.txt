@@ -1,30 +1,36 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 
-project(youtubedl-gui)
+project(youtubedl-gui LANGUAGES CXX)
 
-add_definitions(-Wextra -Wall -pedantic)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 11)
-
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-find_package(Qt5 COMPONENTS Core Widgets  REQUIRED)
 
 INCLUDE(GNUInstallDirs)
 
-add_definitions(${Qt5Widgets_DEFINITIONS})
-add_definitions(${Qt5Core_DEFINITIONS})
-include_directories(${PROJECT_BINARY_DIR})
+#Set default prefix to /usr
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  set(CMAKE_INSTALL_PREFIX "/usr")
+endif()
 
 # uninstall target
-configure_file(
+if(NOT TARGET uninstall)
+  configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
     IMMEDIATE @ONLY)
 
-add_custom_target(uninstall
-COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+  add_custom_target(uninstall
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+endif()
+
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(UI_FILES
     src/downloadstatus.ui
@@ -47,11 +53,27 @@ set(SRC
     src/maincommand.cpp
     src/ytdl.cpp)
 
-QT5_WRAP_UI(UI ${UI_FILES})
-QT5_WRAP_CPP(MOC ${MOC_FILES})
+QT_WRAP_UI(UI ${UI_FILES})
+QT_WRAP_CPP(MOC ${MOC_FILES})
 
-add_executable(youtubedl-gui ${MOC} ${UI} ${SRC})
-target_link_libraries(youtubedl-gui ${Qt5Widgets_LIBRARIES} ${Qt5Core_LIBRARIES})
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_executable(youtubedl-gui
+	    ${MOC} ${UI} ${SRC}
+    )
+else()
+    if(ANDROID)
+        add_library(youtubedl-gui SHARED
+		${MOC} ${UI} ${SRC}
+        )
+    else()
+        add_executable(youtubedl-gui
+		${MOC} ${UI} ${SRC}
+        )
+    endif()
+endif()
+
+
+target_link_libraries(youtubedl-gui PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 install(TARGETS youtubedl-gui RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 

@@ -32,42 +32,40 @@ endif()
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
-set(UI_FILES
-    src/downloadstatus.ui
-    src/ytdl.ui)
-
-set(MOC_FILES
+set(SRC
+    #headers
     src/canceldownload.h
     src/downloadprogress.h
     src/downloadstatus.h
     src/mainactions.h
     src/maincommand.h
-    src/ytdl.h)
+    src/ytdl.h
 
-set(SRC
+    #cpp
     src/canceldownload.cpp
     src/downloadprogress.cpp
     src/downloadstatus.cpp
     src/main.cpp
     src/mainactions.cpp
     src/maincommand.cpp
-    src/ytdl.cpp)
+    src/ytdl.cpp
 
-QT_WRAP_UI(UI ${UI_FILES})
-QT_WRAP_CPP(MOC ${MOC_FILES})
+    #ui
+    src/downloadstatus.ui
+    src/ytdl.ui)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(youtubedl-gui
-	    ${MOC} ${UI} ${SRC}
+	    ${SRC}
     )
 else()
     if(ANDROID)
         add_library(youtubedl-gui SHARED
-		${MOC} ${UI} ${SRC}
+		${SRC}
         )
     else()
         add_executable(youtubedl-gui
-		${MOC} ${UI} ${SRC}
+		${SRC}
         )
     endif()
 endif()

@@ -58,7 +58,7 @@ ytdl::ytdl(QWidget *parent)
         ui->lineBrowse->setText(QDir::homePath());
     }
 
-    connect(ui->buttonBrowse, SIGNAL(clicked()), this, SLOT(browseAction()));
+    connect(ui->buttonBrowse, &QPushButton::clicked, this, &ytdl::browseAction);
 
 }
 

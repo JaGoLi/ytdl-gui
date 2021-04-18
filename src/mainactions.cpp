@@ -17,14 +17,14 @@ mainActions::mainActions(QObject *parent) : QObject(parent)	{
         ytdl* window = ytdl::getWinInstance();
         Ui::ytdl* ui = ytdl::getUiInstance();
 
-        connect(ui->buttonDownload, SIGNAL(released()), window, SLOT(downloadAction()));
+        connect(ui->buttonDownload, &QPushButton::released, window, &ytdl::downloadAction);
 
         //connect enter to downloadAction
         QShortcut* returnAction = new QShortcut(QKeySequence("Return"), window);
-        connect(returnAction, SIGNAL(activated()), ui->buttonDownload, SLOT(click()));
+        connect(returnAction, &QShortcut::activated, ui->buttonDownload, &QPushButton::click);
 
         //connect defaults checkbox to blurring out of options
-        connect(ui->defaultsCheck, SIGNAL(stateChanged(int)), window, SLOT(changeVisibility(int)));
+        connect(ui->defaultsCheck, &QCheckBox::stateChanged, window, &ytdl::changeVisibility);
 }
 
 std::string QString_to_str(QString input) {
@@ -42,16 +42,16 @@ void ytdl::run_ytdl(std::string input) {
     download_instance->moveToThread(downloadThread);
 
     //start thread
-    connect(downloadThread, SIGNAL(started()), this, SLOT(messageDownload()));
-    connect(downloadThread, SIGNAL(started()), this, SLOT(setStatusClose()));
-    connect(downloadThread, SIGNAL(started()), download_instance, SLOT(download()));
-    connect(download_instance, SIGNAL(returnFinished(int)), this, SLOT(setStatusClose()));
-    connect(download_instance, SIGNAL(returnFinished(int)), this, SLOT(printResult(int)));
+    connect(downloadThread, &QThread::started, this, &ytdl::messageDownload);
+    connect(downloadThread, &QThread::started, this, &ytdl::setStatusClose);
+    connect(downloadThread, &QThread::started, download_instance, &mainCommand::download);
+    connect(download_instance, &mainCommand::returnFinished, this, [=](){setStatusClose();});
+    connect(download_instance, &mainCommand::returnFinished, this, [=](int num){printResult(num);});
 
     //delete thread
-    connect(download_instance, SIGNAL(finished()), downloadThread, SLOT(quit()));
-    connect(this, SIGNAL(userAccepted()), download_instance, SLOT(deleteLater()));
-    connect(this, SIGNAL(userAccepted()), downloadThread, SLOT(deleteLater()));
+    connect(download_instance, &mainCommand::finished, downloadThread, &QThread::quit);
+    connect(this, &ytdl::userAccepted, download_instance, &QObject::deleteLater);
+    connect(this, &ytdl::userAccepted, downloadThread, &QObject::deleteLater);
 
 
     //execute
@@ -69,27 +69,27 @@ void ytdl::messageDownload() {
 
     //ProgressThread connections
     //start
-    connect(progressThread, SIGNAL(started()), status, SLOT(updateStatus()));
+    connect(progressThread, &QThread::started, status, &downloadProgress::updateStatus);
 
     //end
-    connect(status, SIGNAL(finished()), progressThread, SLOT(quit()));
-    connect(progressThread, SIGNAL(finished()), status, SLOT(deleteLater()));
-    connect(progressThread, SIGNAL(finished()), progressThread, SLOT(deleteLater()));
-    connect(this, SIGNAL(closeDownloading()), this, SLOT(deleteDownloading()));
+    connect(status, &downloadProgress::finished, progressThread, &QThread::quit);
+    connect(progressThread, &QThread::finished, status, &QObject::deleteLater);
+    connect(progressThread, &QThread::finished, progressThread, &QObject::deleteLater);
+    connect(this, &ytdl::closeDownloading, this, &ytdl::deleteDownloading);
 
     //confirmation close window
     cancel = new cancelDownload;
     QThread* cancelThread = new QThread;
 
     //start
-    connect(downloading, SIGNAL(openCancelWindow()), cancelThread, SLOT(start()));
-    connect(downloading, SIGNAL(openCancelWindow()), cancel, SLOT(show()));
-    connect(cancel, SIGNAL(accepted()), this, SLOT(killDownloadProcess()));
+    connect(downloading, &downloadStatus::openCancelWindow, cancelThread, [=](){cancelThread->start();});
+    connect(downloading, &downloadStatus::openCancelWindow, cancel, &cancelDownload::show);
+    connect(cancel, &cancelDownload::accepted, this, &ytdl::killDownloadProcess);
 
     //end
-    connect(this, SIGNAL(closeDownloading()), cancelThread, SLOT(quit()));
-    connect(cancelThread, SIGNAL(finished()), cancel, SLOT(deleteLater()));
-    connect(cancelThread, SIGNAL(finished()), cancelThread, SLOT(deleteLater()));
+    connect(this, &ytdl::closeDownloading, cancelThread, &QThread::quit);
+    connect(cancelThread, &QThread::finished, cancel, &QObject::deleteLater);
+    connect(cancelThread, &QThread::finished, cancelThread, &QObject::deleteLater);
 
     //exec
     progressThread->start();

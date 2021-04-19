@@ -161,7 +161,7 @@ void ytdl::printResult(int result_num) {
 }
 
 void ytdl::downloadAction() {
-    std::string ytdl_prog = "youtube-dl 2> /tmp/ytdl_stderr --no-warnings";
+    std::string ytdl_prog = "youtube-dl 2> /tmp/ytdl_stderr --no-warnings --all-subs";
     std::string url_str = quote + QString_to_str(ui->lineURL->text()) + quote;
     std::string directory_str = quote + QString_to_str(ui->lineBrowse->text()) + "/%(title)s.%(ext)s" + quote;
     std::string parse_output = R"(stdbuf -o0 grep -oP '^\[download\].*?\K([0-9]+)')";

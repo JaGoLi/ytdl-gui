@@ -208,7 +208,7 @@ void ytdl::downloadAction() {
                             audio_format = "aac";
                             break;
                     case 1:
-                            audio_format = "flac";
+                            audio_format = "vorbis";
                             break;
                     case 2:
                             audio_format = "mp3";

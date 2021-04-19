@@ -22,7 +22,7 @@ ytdl::ytdl(QWidget *parent)
 
     //Setup MFormatGroup IDs
     ui->MFormatGroup->setId(ui->radioAAC, 0);
-    ui->MFormatGroup->setId(ui->radioFLAC, 1);
+    ui->MFormatGroup->setId(ui->radioOGG, 1);
     ui->MFormatGroup->setId(ui->radioMP3, 2);
     ui->MFormatGroup->setId(ui->radioOPUS, 3);
     ui->MFormatGroup->setId(ui->radioWAV, 4);

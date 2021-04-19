@@ -38,7 +38,7 @@ std::string QString_to_str(QString input) {
 void ytdl::run_ytdl(std::string input) {
     //initialize youtube-dl thread
     downloadThread = new QThread;
-    mainCommand* download_instance = new mainCommand(input);
+    download_instance = new mainCommand(input);
     download_instance->moveToThread(downloadThread);
 
     //start thread
@@ -100,11 +100,8 @@ void ytdl::killDownloadProcess() {
     no_feedback = true;
     downloading->closeDownloadWindow();
 
-    int kill_status = std::system("killall youtube-dl");
-
-    if (kill_status != 0) {
-        std::cout << "couldn't kill process" << std::endl;
-    }
+    //kill command
+    download_instance->command->kill();
 }
 
 
@@ -167,7 +164,7 @@ void ytdl::downloadAction() {
     std::string ytdl_prog = "youtube-dl 2> /tmp/ytdl_stderr --no-warnings";
     std::string url_str = quote + QString_to_str(ui->lineURL->text()) + quote;
     std::string directory_str = quote + QString_to_str(ui->lineBrowse->text()) + "/%(title)s.%(ext)s" + quote;
-    std::string parse_output = R"(stdbuf -o0 grep -oP '^\[download\].*?\K([0-9]+)' | tee /tmp/ytdl_prg)";
+    std::string parse_output = R"(stdbuf -o0 grep -oP '^\[download\].*?\K([0-9]+)')";
 
     //Youtube playlist support
     std::string playlist;

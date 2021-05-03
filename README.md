@@ -15,7 +15,9 @@ To try out the beta branch of this project, you can download the package ```yout
 ### Ubuntu
 For a system based on Ubuntu 18.04 Bionic Beaver, 20.04 Focal Fossa or 20.10 Groovy Gorilla, simply add my ppa and install the application:<br/>
 ```sudo add-apt-repository ppa:mordec13/youtubedl-gui```<br/>
-```sudo apt update && sudo apt install youtubedl-gui```<br/>
+```sudo apt update && sudo apt install youtubedl-gui```<br/><br/>
+Then, you have to install the latest ```youtube-dl``` version using pip. Do the following:<br/>
+```sudo pip3 install youtube-dl```
 
 ## Build From Source
 ### Dependencies

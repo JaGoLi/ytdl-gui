@@ -32,4 +32,6 @@ Since the version of ```youtube-dl``` is often not current on debian, I recommen
 ### Installing
 To install after having installed the correct dependencies:<br/>
 ```git clone https://github.com/JaGoLi/ytdl-gui.git && cd ytdl-gui```<br/>
-```make && sudo make install```
+```mkdir build && cd build```<br/>
+```cmake .. && make```<br/>
+```sudo make install```<br/>

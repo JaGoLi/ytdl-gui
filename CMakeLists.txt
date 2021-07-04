@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.9)
 
 project(youtubedl-gui LANGUAGES CXX)
 
@@ -12,11 +12,18 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 INCLUDE(GNUInstallDirs)
+INCLUDE(CheckIPOSupported)
 
 #Set default prefix to /usr
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX "/usr")
 endif()
+# check if compiler supports link time optmizations and enable it
+check_ipo_supported(RESULT result)
+if(result)
+    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+endif()
+
 
 # uninstall target
 if(NOT TARGET uninstall)

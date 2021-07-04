@@ -18,10 +18,13 @@ INCLUDE(CheckIPOSupported)
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX "/usr")
 endif()
+
 # check if compiler supports link time optmizations and enable it
-check_ipo_supported(RESULT result)
-if(result)
-    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+if(LINUX)
+  check_ipo_supported(RESULT result)
+  if(result)
+      set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+  endif()
 endif()
 
 

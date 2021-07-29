@@ -22,9 +22,11 @@ endif()
 # check if compiler supports link time optmizations and enable it
 if(LINUX)
   check_ipo_supported(RESULT result)
-  if(result)
-      set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
-  endif()
+    if (CMAKE_COMPILER_IS_GNUCXX) # clang lto with qt is broken.
+            if(result)
+            set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+        endif()
+    endif()
 endif()
 
 

@@ -45,16 +45,32 @@ mainActions::mainActions(QObject *parent) : QObject(parent)	{
                 ui->lineBrowse->setText(QString::fromStdString(stored_value));
             }
 
-            //apply tab setting
-            ui->Tabs->setCurrentIndex(stoi(user_settings->values[3]));
+            try {
+                //apply tab setting
+                ui->Tabs->setCurrentIndex(stoi(user_settings->values[3]));
 
-            //apply audio settings
-            ui->MQualityGroup->button(stoi(user_settings->values[4]))->setChecked(true);
-            ui->MFormatGroup->button(stoi(user_settings->values[5]))->setChecked(true);
+                //apply audio settings
+                num_to_button(ui->MQualityGroup, stoi(user_settings->values[4]), 4);
+                num_to_button(ui->MFormatGroup, stoi(user_settings->values[5]), 5);
 
-            //apply video settings
-            ui->VResGroup->button(stoi(user_settings->values[6]))->setChecked(true);
-            ui->VFormatGroup->button(stoi(user_settings->values[7]))->setChecked(true);
+                //apply video settings
+                num_to_button(ui->VResGroup, stoi(user_settings->values[6]), 5);
+                num_to_button(ui->VFormatGroup, stoi(user_settings->values[7]), 4);
+            }
+
+             catch (const std::invalid_argument &e) {
+                qDebug() << "Invalid argument in config file:";
+                qDebug() << e.what() << "invalid argument";
+            }
+             catch (const std::out_of_range &e) {
+                qDebug() << "Invalid argument in config file:";
+                qDebug() << e.what()  << "out of range";
+            }
+             catch (const std::exception &e) {
+                qDebug() << "Invalid argument in config file:";
+                qDebug() << e.what() << "undefined error";
+            }
+
         }
 
 
@@ -67,7 +83,20 @@ void mainActions::bool_to_checkbox(std::string input, QCheckBox* box) {
     else if (input == "no") {
         box->setCheckState(Qt::Unchecked);
     }
+    else {
+        qDebug() << "Invalid argument in config file";
+    }
 }
+
+void mainActions::num_to_button(QButtonGroup* group, int sel, int total) {
+    if ( -1 < sel && sel < total) {
+        group->button(sel)->setChecked(true);
+    }
+    else {
+        qDebug() << "Invalid argument in config file";
+    }
+}
+
 
 std::string QString_to_str(QString input) {
         std::string output = input.toUtf8().constData();

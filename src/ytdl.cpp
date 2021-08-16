@@ -4,6 +4,9 @@
 #include <iostream>
 #include <QFileDialog>
 #include <QScreen>
+#include <iostream>
+#include <fstream>
+#include <QCloseEvent>
 
 ytdl* ytdl::curr_window = nullptr;
 Ui::ytdl* ytdl::curr_ui = nullptr;
@@ -49,6 +52,15 @@ ytdl::ytdl(QWidget *parent)
     //center on screen
     move(QGuiApplication::screens().at(0)->geometry().center() - frameGeometry().center());
 
+
+    //create config dir
+    config_dir = QDir::homePath() + "/.config/ytdl-gui";
+    QDir().mkpath(config_dir);
+
+    //name config file
+    file_qstr = config_dir + "/ytdl-gui.conf";
+    file_str = file_qstr.toUtf8().constData();
+
     //Setup text
     QString downloads_dir = QDir::homePath() + "/Downloads";
     if (QDir(downloads_dir).exists()) {
@@ -83,4 +95,55 @@ void ytdl::browseAction() {
     if (!user_dir.isEmpty()) {
         ui->lineBrowse->setText(user_dir);
     }
+}
+
+//Get status
+
+std::string ytdl::check_to_bool(QCheckBox* input) {
+    if (input->isChecked()) {
+        return "yes";
+    }
+    else {
+        return "no";
+    }
+}
+
+//overrides
+void ytdl::closeEvent(QCloseEvent *event) {
+    //create file
+    std::fstream config_file;
+    config_file.open(file_str, std::ios_base::out);
+
+    //save settings
+    if (config_file.is_open()) {
+        //defaults
+        config_file << "Defaults: " << check_to_bool(ui->defaultsCheck) << std::endl;
+
+        //playlist
+        config_file << "Playlist: " << check_to_bool(ui->playlistCheck) << std::endl;
+
+        //current directory
+        config_file << "Save Location: " << ui->lineBrowse->text().toUtf8().constData() << std::endl;
+
+        //selected tab
+        config_file << "Selected Tab: " << ui->Tabs->currentIndex() << std::endl;
+
+        //audio quality
+        config_file << "Audio Quality: " << ui->MQualityGroup->checkedId() << std::endl;
+
+        //audio format
+        config_file << "Audio Format: " << ui->MFormatGroup->checkedId() << std::endl;
+
+        //video resolution
+        config_file << "Video Resolution: " << ui->VResGroup->checkedId() << std::endl;
+
+        //video format
+        config_file << "Video Format: " << ui->VFormatGroup->checkedId() << std::endl;
+
+    }
+
+    config_file.close();
+
+    //close
+    event->accept();
 }

@@ -1,3 +1,4 @@
+#include "readconfig.h"
 #include "mainactions.h"
 #include <string>
 #include <iostream>
@@ -9,6 +10,8 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <QThread>
+#include <QFile>
+#include <QDebug>
 
 std::string whitespace = " ";
 std::string quote = "'";
@@ -25,6 +28,45 @@ mainActions::mainActions(QObject *parent) : QObject(parent)	{
 
         //connect defaults checkbox to blurring out of options
         connect(ui->defaultsCheck, &QCheckBox::stateChanged, window, &ytdl::changeVisibility);
+
+
+        // resume user settings
+        if (QFile(window->file_qstr).exists()) {
+            readConfig* user_settings = new readConfig(window->file_str);
+            user_settings->get_values();
+
+            //apply checkbox settings
+            bool_to_checkbox(user_settings->values[0], ui->defaultsCheck);
+            bool_to_checkbox(user_settings->values[1], ui->playlistCheck);
+
+            //apply dir setting
+            std::string stored_value = user_settings->values[2];
+            if (!stored_value.empty() && stored_value != "Location:") {
+                ui->lineBrowse->setText(QString::fromStdString(stored_value));
+            }
+
+            //apply tab setting
+            ui->Tabs->setCurrentIndex(stoi(user_settings->values[3]));
+
+            //apply audio settings
+            ui->MQualityGroup->button(stoi(user_settings->values[4]))->setChecked(true);
+            ui->MFormatGroup->button(stoi(user_settings->values[5]))->setChecked(true);
+
+            //apply video settings
+            ui->VResGroup->button(stoi(user_settings->values[6]))->setChecked(true);
+            ui->VFormatGroup->button(stoi(user_settings->values[7]))->setChecked(true);
+        }
+
+
+}
+
+void mainActions::bool_to_checkbox(std::string input, QCheckBox* box) {
+    if (input == "yes") {
+        box->setCheckState(Qt::Checked);
+    }
+    else if (input == "no") {
+        box->setCheckState(Qt::Unchecked);
+    }
 }
 
 std::string QString_to_str(QString input) {

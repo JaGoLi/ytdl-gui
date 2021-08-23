@@ -26,7 +26,7 @@ Here is a list of build dependencies for arch linux:<br/>
 ```base-devel qt5-base ffmpeg youtube-dl```<br/>
 
 For debian-based systems (including ubuntu) here is a list of dependencies:<br/>
-```build-essential qt5-default qtdeclarative5-dev ffmpeg```<br/>
+```build-essential cmake qt5-default qtdeclarative5-dev ffmpeg```<br/>
 Since the version of ```youtube-dl``` is often not current on debian, I recommend you install it through ```pip3```.
 
 ### Installing

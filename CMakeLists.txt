@@ -52,6 +52,7 @@ set(SRC
     src/mainactions.h
     src/maincommand.h
     src/ytdl.h
+    src/readconfig.h
 
     #cpp
     src/canceldownload.cpp
@@ -61,6 +62,7 @@ set(SRC
     src/mainactions.cpp
     src/maincommand.cpp
     src/ytdl.cpp
+    src/readconfig.cpp
 
     #ui
     src/downloadstatus.ui

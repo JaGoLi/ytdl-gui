@@ -27,6 +27,10 @@ private:
        ytdl* window;
        Ui::ytdl* ui;
 
+        //string to action
+        void bool_to_checkbox(std::string input, QCheckBox* box);
+        void num_to_button(QButtonGroup* group, int sel, int total);
+
 private slots:
        friend void ytdl::downloadAction();
        friend void ytdl::printResult(int result_num);

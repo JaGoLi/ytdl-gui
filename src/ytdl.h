@@ -32,9 +32,15 @@ public:
     ytdl(QWidget *parent = nullptr);
     ~ytdl();
 
+    //config dir
+    QString config_dir;
+    QString file_qstr;
+    std::string file_str;
+
     void run_ytdl(std::string input);
     static ytdl* getWinInstance();
     static Ui::ytdl* getUiInstance();
+    std::string check_to_bool(QCheckBox* input);
 
 signals:
     void userAccepted();
@@ -45,6 +51,10 @@ private:
     static ytdl* curr_window;
     static Ui::ytdl* curr_ui;
     bool no_feedback = false;
+
+
+    //close button override
+    void closeEvent(QCloseEvent *event) override;
 
 public slots:
     //internal

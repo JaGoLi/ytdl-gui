@@ -532,9 +532,9 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="MFormatGroup"/>
-  <buttongroup name="VFormatGroup"/>
   <buttongroup name="MQualityGroup"/>
+  <buttongroup name="VFormatGroup"/>
   <buttongroup name="VResGroup"/>
+  <buttongroup name="MFormatGroup"/>
  </buttongroups>
 </ui>

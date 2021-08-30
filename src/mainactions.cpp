@@ -12,7 +12,6 @@
 #include <QThread>
 #include <QFile>
 #include <QDebug>
-#include <QTimer>
 
 std::string whitespace = " ";
 std::string quote = "'";

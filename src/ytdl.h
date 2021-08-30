@@ -45,6 +45,7 @@ public:
 signals:
     void userAccepted();
     void closeDownloading();
+    void timerFinished();
 
 private:
     Ui::ytdl *ui;

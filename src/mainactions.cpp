@@ -12,6 +12,7 @@
 #include <QThread>
 #include <QFile>
 #include <QDebug>
+#include <QTimer>
 
 std::string whitespace = " ";
 std::string quote = "'";
@@ -122,7 +123,7 @@ void ytdl::run_ytdl(std::string input) {
     //delete thread
     connect(download_instance, &mainCommand::finished, downloadThread, &QThread::quit);
     connect(this, &ytdl::userAccepted, download_instance, &QObject::deleteLater);
-    connect(this, &ytdl::userAccepted, downloadThread, &QObject::deleteLater);
+    connect(downloadThread, &QThread::finished, downloadThread, &QObject::deleteLater);
 
 
     //execute
@@ -201,6 +202,7 @@ void ytdl::changeVisibility(int state) {
 }
 
 void ytdl::printResult(int result_num) {
+        bool is_active = downloading->isActiveWindow();
         emit closeDownloading();
 
         if (result_num == 0) {
@@ -209,7 +211,7 @@ void ytdl::printResult(int result_num) {
                 success.setIcon(QMessageBox::Information);
                 success.setText("Download Succeeded");
 
-                if (no_feedback == false) {
+                if (!no_feedback && is_active) {
                     success.exec();
                 }
 
